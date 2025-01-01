@@ -13,6 +13,6 @@ jobs:
     - uses: DeterminateSystems/nix-installer-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
     - name: Develop
-      run: nix develop . --no-pure-eval
+      run: nix develop .#render --no-pure-eval
     - name: Render
       run: just render
