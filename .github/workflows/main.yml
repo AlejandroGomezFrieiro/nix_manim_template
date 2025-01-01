@@ -1,0 +1,18 @@
+name: "Render manim"
+on:
+  pull_request:
+  push:
+jobs:
+  render:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v4
+    - uses: DeterminateSystems/nix-installer-action@main
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - name: Develop
+      run: nix develop . --no-pure-eval
+    - name: Render
+      run: just render
