@@ -29,51 +29,85 @@
             imports = [
               nixvim_config.outputs.nixosModules.${system}.nvim
             ];
-          plugins.lsp.servers.pylsp.enable = true;
+            plugins.lsp.servers.pylsp.enable = true;
           };
         };
         neovim = nixvim_config.inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule neovimModule;
+        # python_dotenv = pkgs.python3Packages.buildPythonPackage rec {
+        #     pname = "python-dotenv";
+        #     version = "0.21.1";
+        #     src = pkgs.fetchPypi {
+        #         inherit pname version;
+        #         sha256 = "HJPej2Ns3jzjdykoGNDkQLbkWoLyFcN0SXkVH6gVHEk=";
+        #     };
+        # };
+        #       manim_voiceover = pkgs.python3Packages.buildPythonPackage rec {
+        #       pyproject = true;
+        #       pname = "manim_voiceover";
+        #       version = "0.3.7";
+        #       build-system = [
+        #   pkgs.python312Packages.poetry-core
+        # ];
+        #       dependencies = [
+        #               pkgs.python312Packages.jaxlib
+        #               pkgs.python312Packages.jax
+        #                                       ];
+        #       buildInputs = [
+        #               pkgs.python312Packages.soxr
+        #               pkgs.python312Packages.manim
+        #               pkgs.python312Packages.mutagen
+        #               pkgs.python312Packages.pip
+        #               pkgs.python312Packages.pydub
+        #               python_dotenv
+        #               pkgs.python312Packages.python-slugify
+        #       ];
+        #
+        #     src = pkgs.fetchFromGitHub {
+        #       owner = "ManimCommunity";
+        #       repo = "manim-voiceover";
+        #       rev = "v0.3.7";
+        #       sha256 = "VwU1Jk10DR13yWHJ0CNyFRGsfYN4xXm8SVWVjMsoig0="; # TODO
+        #     };
+        #       };
       in {
         formatter = pkgs.alejandra;
-        # checks = {
-        #   default = nixvim_config.inputs.nixvim.lib.${system}.check.mkTestDerivationFromNixvimModule neovimModule;
-        # };
         packages.devenv-up = self.devShells.${system}.default.config.procfileScript;
-        devShells.default = devenv.lib.mkShell{
-            inherit inputs pkgs;
-            modules = [
-            ({pkgs, config, ...}: {
-                packages = [
-                    neovim
-                    pkgs.gtk4
-                    pkgs.just
-                    pkgs.ruff
-                    pkgs.manim
-                    pkgs.mpv
-                ];
-             })
-            ];
-
+        devShells.render = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            ({
+              pkgs,
+              config,
+              ...
+            }: {
+              packages = [
+                pkgs.gtk4
+                pkgs.just
+                pkgs.manim
+              ];
+            })
+          ];
         };
-        # pkgs.mkShell {
-        #     packages = [
-        #         neovim
-        #         pkgs.uv
-        #         pkgs.virtualenv
-        #         pkgs.just
-        #         pkgs.pango
-        #         pkgs.gtk4
-        #         pkgs.cairo
-        #         pkgs.ffmpeg
-        #         pkgs.sox
-        #         pkgs.manim
-        #         
-        #                 ];
-        # shellHook = ''
-        #     unset PYTHONPATH
-        #     export REPO_ROOT=$(git rev-parse --show-toplevel)
-        #   '';
-        # };
+        devShells.default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            ({
+              pkgs,
+              config,
+              ...
+            }: {
+              packages = [
+                neovim
+                pkgs.gtk4
+                pkgs.just
+                pkgs.ruff
+                pkgs.manim
+                # manim_voiceover
+                pkgs.mpv
+              ];
+            })
+          ];
+        };
       }
     );
 }

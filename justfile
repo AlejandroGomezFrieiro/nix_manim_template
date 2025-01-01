@@ -1,2 +1,2 @@
 render:
-        manim -pql ./src/main.py
+        manim -ql ./src/main.py
