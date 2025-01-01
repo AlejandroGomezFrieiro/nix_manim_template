@@ -1,0 +1,15 @@
+[project]
+name = "manim_template"
+version = "0.1.0"
+description = "Quick template for using manim."
+readme = "README.md"
+dependencies = [
+    "manim-voiceover[azure,gtts]>=0.3.7",
+    "manim>=0.18.1",
+    "numpy>=2.2.1",
+]
+requires-python = ">=3.12"
+
+[[tool.uv.index]]
+url = "https://pypi.org/simple"
+default = true
