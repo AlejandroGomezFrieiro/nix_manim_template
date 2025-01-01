@@ -1,5 +1,5 @@
 render:
-        manim -ql ./src/main.py
+    manim -qh ./src/main.py
 
 shell:
     nix develop . --no-pure-eval
