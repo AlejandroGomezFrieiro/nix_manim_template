@@ -12,7 +12,8 @@ jobs:
     - uses: actions/checkout@v4
     - uses: DeterminateSystems/nix-installer-action@main
     - uses: DeterminateSystems/magic-nix-cache-action@main
-    - name: Develop
-      run: nix develop .#render --no-pure-eval
+    - uses: nicknovitski/nix-develop@v1
+      with:
+        arguments: ".#render --no-pure-eval"
     - name: Render
       run: just render
