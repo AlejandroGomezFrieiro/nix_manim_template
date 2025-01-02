@@ -104,6 +104,7 @@
                 pkgs.manim
                 # manim_voiceover
                 pkgs.mpv
+                pkgs.sox
               ];
             })
           ];
